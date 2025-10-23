@@ -1,6 +1,7 @@
 import express from "express"
 import bodyParser from "body-parser"
 import clienteRoutes from "./router/router"
+import serverless from "serverless-http"
 
 const app = express()
 app.use(bodyParser.json())
@@ -13,7 +14,5 @@ app.get("/", (req, res) => {
 // Rutas de clientes
 app.use("/customer", clienteRoutes)
 
-const PORT = 3000
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`)
-})
+// Exportar el handler para AWS Lambda
+module.exports.handler = serverless(app)
